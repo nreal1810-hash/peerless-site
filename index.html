@@ -1072,7 +1072,11 @@ function vehFormHTML(v){
   +'<label class="field"><span>Body Style</span><select name="body">'+opt(["Sedan","Coupe","Hatchback","SUV","Crossover","Pickup Truck","Van","Wagon"],v.body||"Sedan")+'</select></label>'
   +'<label class="field"><span>Price ($) *</span><input name="price" type="number" required value="'+esc(v.price||"")+'"></label>'
   +'<label class="field"><span>Mileage *</span><input name="mileage" type="number" required value="'+esc(v.mileage||"")+'"></label>'
+  // +'<label class="field"><span>Stock Number</span><input name="stock" value="'+esc(v.stock||"")+'"></label>'
+
   +'<label class="field"><span>Stock Number</span><input name="stock" value="'+esc(v.stock||"")+'"></label>'
+  +'<label class="field"><span>Custom URL (optional)</span><input name="slug" value="'+esc(v.slug||"")+'" placeholder="2010-bmw-328i-xdrive"></label>'
+    //
   +'<label class="field"><span>VIN</span><input name="vin" value="'+esc(v.vin||"")+'"></label>'
   +'<label class="field"><span>Exterior Color</span><input name="ext" value="'+esc(v.ext||"")+'"></label>'
   +'<label class="field"><span>Interior Color</span><input name="int" value="'+esc(v.int||"")+'"></label>'
@@ -1176,12 +1180,39 @@ function settingsHTML(){
 }
 
 /* ---------- render ---------- */
+// function renderImgThumbs(){
+//   var box=A("#imgThumbs");if(!box)return;
+//   box.innerHTML=curImages.map(function(src,i){
+//     return '<div class="img-chip"><img src="'+esc(src)+'" alt="" onerror="imgFallback(this)"><button type="button" data-act="del-img" data-i="'+i+'">✕</button></div>';
+//   }).join("")||'<p style="font-size:12.5px;color:var(--muted)">No photos yet — add at least one.</p>';
+// }
+
+(function(){var st=document.createElement("style");st.textContent=
+".img-chip{cursor:grab;position:relative}.img-chip.dragging{opacity:.35;outline:2px dashed var(--blue)}"
++".cover-tag{position:absolute;bottom:3px;left:3px;background:rgba(0,87,184,.92);color:#fff;font:700 9px Poppins,sans-serif;padding:2px 6px;border-radius:5px;z-index:2}"
++".cover-tag.dim{background:rgba(6,43,73,.75)}"
++".chip-btns{position:absolute;top:3px;right:3px;display:flex;gap:4px;z-index:2}"
++".chip-btns button{width:20px;height:20px;border-radius:50%;border:0;background:rgba(6,43,73,.85);color:#fff;font-size:10px;cursor:pointer;line-height:1}"
++".chip-btns button:hover{background:var(--blue)}";document.head.appendChild(st);})();
+var dragIdx=null;
+document.addEventListener("dragstart",function(e){var c=e.target.closest&&e.target.closest(".img-chip");if(!c)return;dragIdx=parseInt(c.getAttribute("data-i"),10);c.classList.add("dragging");try{e.dataTransfer.setData("text/plain","img");e.dataTransfer.effectAllowed="move";}catch(err){}});
+document.addEventListener("dragover",function(e){var c=e.target.closest&&e.target.closest(".img-chip");if(!c||dragIdx===null)return;e.preventDefault();c.classList.add("dragover");});
+document.addEventListener("dragleave",function(e){var c=e.target.closest&&e.target.closest(".img-chip");if(c)c.classList.remove("dragover");});
+document.addEventListener("drop",function(e){var c=e.target.closest&&e.target.closest(".img-chip");if(!c||dragIdx===null)return;e.preventDefault();var to=parseInt(c.getAttribute("data-i"),10);if(!isNaN(to)&&to!==dragIdx){var m=curImages.splice(dragIdx,1)[0];curImages.splice(to,0,m);renderImgThumbs();}dragIdx=null;});
+document.addEventListener("dragend",function(){AE(".img-chip").forEach(function(x){x.classList.remove("dragging","dragover");});dragIdx=null;});
 function renderImgThumbs(){
   var box=A("#imgThumbs");if(!box)return;
   box.innerHTML=curImages.map(function(src,i){
-    return '<div class="img-chip"><img src="'+esc(src)+'" alt="" onerror="imgFallback(this)"><button type="button" data-act="del-img" data-i="'+i+'">✕</button></div>';
-  }).join("")||'<p style="font-size:12.5px;color:var(--muted)">No photos yet — add at least one.</p>';
+    return '<div class="img-chip" draggable="true" data-i="'+i+'" title="Drag to reorder">'
+      +(i===0?'<span class="cover-tag">★ COVER</span>':'<span class="cover-tag dim">Photo '+(i+1)+'</span>')
+      +'<img src="'+esc(src)+'" alt="" onerror="imgFallback(this)">'
+      +'<span class="chip-btns"><button type="button" data-act="cover-img" data-i="'+i+'" title="Make cover photo">★</button>'
+      +'<button type="button" data-act="del-img" data-i="'+i+'" title="Remove">✕</button></span></div>';
+  }).join("")||'<p style="font-size:12.5px;color:var(--muted)">No photos yet. Drag to reorder • ★ = make cover • first photo shows on cards.</p>';
 }
+
+
+  // 
 function renderTab(){
   var b=A("#admBody");if(!b)return;
   try{
@@ -1229,7 +1260,9 @@ document.addEventListener("click",function(e){
   else if(a==="tog-feat"){var vf=P().getVehicle(t.getAttribute("data-id"));if(vf){vf.featured=!vf.featured;P().save();P().rebuild();renderTab();toast(vf.featured?"Added to homepage ★":"Removed from featured");}}
   else if(a==="fb-text"){fbText(t.getAttribute("data-id"));}
   else if(a==="del-img"){curImages.splice(parseInt(t.getAttribute("data-i"),10),1);renderImgThumbs();}
-  else if(a==="add-url"){var ui=A("#imgUrl");if(ui&&ui.value.trim()){curImages.push(ui.value.trim());ui.value="";renderImgThumbs();}}
+  // else if(a==="add-url"){var ui=A("#imgUrl");if(ui&&ui.value.trim()){curImages.push(ui.value.trim());ui.value="";renderImgThumbs();}}
+      else if(a==="add-url"){var ui=A("#imgUrl");if(ui&&ui.value.trim()){curImages.push(ui.value.trim());ui.value="";renderImgThumbs();}}
+  else if(a==="cover-img"){var ci=parseInt(t.getAttribute("data-i"),10);if(ci>0){var cm=curImages.splice(ci,1)[0];curImages.unshift(cm);}renderImgThumbs();toast("Cover photo set ★");return;}
   else if(a==="backup"){download("peerless-backup-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify({vehicles:P().getV(),posts:P().getP()},null,1),"application/json");toast("Backup downloading…");}
   else if(a==="dl-json"){download("inventory.json",JSON.stringify({vehicles:P().getV(),posts:P().getP()},null,1),"application/json");toast("inventory.json downloading — upload it to your GitHub repo");}
   else if(a==="exp-cg"){download("peerless-cargurus-feed-"+new Date().toISOString().slice(0,10)+".csv",buildCSV(),"text/csv;charset=utf-8");toast("CarGurus CSV downloading ✓");}
@@ -1246,8 +1279,17 @@ document.addEventListener("submit",function(e){
     var g=function(n){return f.elements[n].value.trim();};
     var lines=function(n){return f.elements[n].value.split("\n").map(function(s){return s.trim();}).filter(Boolean);};
     if(!curImages.length){toast("Please add at least one photo");return;}
+    // var id=f.getAttribute("data-id");
+    // var obj={id:id||("v"+Date.now()),year:parseInt(g("year"),10)||2020,make:g("make"),model:g("model"),trim:g("trim"),
     var id=f.getAttribute("data-id");
-    var obj={id:id||("v"+Date.now()),year:parseInt(g("year"),10)||2020,make:g("make"),model:g("model"),trim:g("trim"),
+    var sl=slugify(g("slug"));
+    var newId=id||("v"+Date.now());
+    if(sl){var clash=false;P().getV().forEach(function(x){if(x.id===sl&&x.id!==id)clash=true;});
+      if(clash){toast("That custom URL is already taken — choose another");return;}
+      newId=sl;}
+    var obj={id:newId,slug:sl,year:parseInt(g("year"),10)||2020,make:g("make"),model:g("model"),trim:g("trim"),
+
+                            //
       type:g("type"),body:g("body"),price:parseFloat(g("price"))||0,mileage:parseInt(g("mileage"),10)||0,
       stock:g("stock"),vin:g("vin"),ext:g("ext"),int:g("int"),engine:g("engine"),hp:g("hp"),
       drivetrain:g("drivetrain"),trans:g("trans"),fuel:g("fuel"),mpg:g("mpg"),tank:g("tank"),
