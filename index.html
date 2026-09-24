@@ -2677,38 +2677,38 @@
     /* Custom Css start From Here  */
 
     .nav-dropdown {
-  position: relative;
-}
+      position: relative;
+    }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 180px;
-  background: #fff;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  border-radius: 6px;
-  padding: 8px 0;
-  z-index: 1000;
-}
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 180px;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      padding: 8px 0;
+      z-index: 1000;
+    }
 
-.dropdown-menu a {
-  display: block;
-  padding: 10px 15px;
-  color: #333;
-  text-decoration: none;
-}
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+    }
 
-.dropdown-menu a:hover {
-  background: #0057b8;
-  color: white;
-}
+    .dropdown-menu a:hover {
+      background: #0057b8;
+      color: white;
+    }
 
-/* Show submenu when hovering */
-.nav-dropdown:hover .dropdown-menu {
-  display: block;
-}
+    /* Show submenu when hovering */
+    .nav-dropdown:hover .dropdown-menu {
+      display: block;
+    }
 
 
     /* Custom Css End Here  */
@@ -2765,7 +2765,7 @@
       <div class="container nav-in">
         <a class="logo" href="#/" aria-label="Peerless Auto Sales — Home">
           <svg viewBox="0 0 292 58" role="img" aria-label="Peerless Auto Sales logo">
-            
+
             <defs>
               <linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="#5FB0FF" />
@@ -2810,24 +2810,24 @@
         </div> -->
 
         <div class="nav-links" id="navLinks">
-  <a href="#/" data-nav="home">Home</a>
-  <a href="#/inventory" data-nav="inventory">Inventory</a>
+          <a href="#/" data-nav="home">Home</a>
+          <a href="#/inventory" data-nav="inventory">Inventory</a>
 
-  <div class="nav-dropdown">
-    <a href="#Cars" data-nav="cars">Used Cars</a>
+          <div class="nav-dropdown">
+            <a href="#Cars" data-nav="cars">Used Cars</a>
 
-    <div class="dropdown-menu">
-      <a href="#/inventory?type=Sedan">Used Sedans</a>
-      <a href="#/inventory?type=Truck">Used Trucks</a>
-      <a href="#/inventory?type=SUV">Used SUVs</a>
-    </div>
-  </div>
+            <div class="dropdown-menu">
+              <a href="#/inventory?type=Sedan">Used Sedans</a>
+              <a href="#/inventory?type=Truck">Used Trucks</a>
+              <a href="#/inventory?type=SUV">Used SUVs</a>
+            </div>
+          </div>
 
-  <a href="#/financing" data-nav="financing">Finance</a>
-  <a href="#/about" data-nav="about">About</a>
-  <a href="#/contact" data-nav="contact">Contact Us</a>
-</div>
-<!-- ------------------------------------------------------------- -->
+          <a href="#/financing" data-nav="financing">Finance</a>
+          <a href="#/about" data-nav="about">About</a>
+          <a href="#/contact" data-nav="contact">Contact Us</a>
+        </div>
+        <!-- ------------------------------------------------------------- -->
 
 
         <a href="#/inventory" class="btn btn-primary btn-sm nav-cta">View Inventory
@@ -2968,9 +2968,8 @@
             </div>
           </div>
           <div class="why-media reveal">
-            <img src="Peerless Sales.jpg"
-              alt="Quality used SUV available at Peerless Auto Sales in Salem, VA" loading="lazy"
-              onerror="imgFallback(this)">
+            <img src="Peerless Sales.jpg" alt="Quality used SUV available at Peerless Auto Sales in Salem, VA"
+              loading="lazy" onerror="imgFallback(this)">
             <div class="badge"><small>Proudly Your</small><b>LOCAL DEALER</b>
               <p>Serving Salem, VA<br>&amp; Surrounding Areas</p>
             </div>
@@ -3610,19 +3609,19 @@
           + (v.deal ? '<span class="deal-badge">' + IC.down + ' Great Deal • ' + esc(v.deal) + '</span>' : "")
           + '</div>'
           + '<div style="margin-top:18px"><a href="tel:+15403893000" class="btn btn-primary btn-block">Check Availability — Call ' + IC.arrR + '</a></div>'
-          + '<div class="contact-row"><a href="tel:+15403893000">Call</a><a href="https://m.me/peerlessautosales" target="_blank" rel="noopener">' + IC.chat + ' Messenger</a><a href="https://www.facebook.com/peerlessautosales/" target="_blank" rel="noopener">Facebook</a></div>'
-          + '<details class="calc" style="margin-top:16px"><summary>Estimate Monthly Payment</summary><div class="calc-body"><div class="calc-row">'
-          + '<label class="field"><span>Down Payment</span><input type="number" id="calcDown" value="3000" min="0" step="500"></label>'
-          + '<label class="field"><span>Term</span><select id="calcTerm"><option value="72">72 months</option><option value="60">60 months</option><option value="48">48 months</option><option value="36">36 months</option></select></label>'
-          + '</div><div class="calc-out"><span style="font:600 13px var(--fh);color:var(--muted)">Est. Monthly</span><b id="calcMonthly">—</b></div><small>Estimate only — assumes 7.9% APR with approved credit. Taxes, title &amp; fees not included.</small></div></details></div>'
-          + '<div class="side-card"><h3>Request Information</h3><form class="mini-form" id="reqForm">'
-          + '<input type="text" name="name" placeholder="Your name" required>'
-          + '<input type="tel" name="phone" placeholder="Phone number" required>'
-          + '<textarea name="msg" rows="3">I\'m interested in the ' + esc(vName(v)) + ' (Stock #' + esc(v.stock || "") + '). Is it still available?</textarea>'
-          + '<button type="submit" class="btn btn-primary btn-block">Send Request ' + IC.arrR + '</button></form></div>'
-          + '</aside></div></div>'
-          + '<div class="container similar-wrap"><h2>More From Our Inventory</h2><div class="v-grid g3">' + similar.map(function (s, i) {return vehicleCard(s, i * 0.08);}).join("") + '</div></div>'
-          + '<div class="container vd-bottom-cta"><button type="button" class="back-inv" data-action="go-inventory">' + IC.arrL + ' Back to All Inventory</button></div>';
+          + '<div class="contact-row"><a href="tel:+15403893000">Call</a><a href="https://m.me/peerlessautosales" target="_blank" rel="noopener">' + IC.chat + ' Messenger</a><a href="https://www.facebook.com/peerlessautosales/" target="_blank" rel="noopener"></a></div>'
+          // + '<details class="calc" style="margin-top:16px"><summary>Estimate Monthly Payment</summary><div class="calc-body"><div class="calc-row">'
+          // + '<label class="field"><span>Down Payment</span><input type="number" id="calcDown" value="3000" min="0" step="500"></label>'
+          // + '<label class="field"><span>Term</span><select id="calcTerm"><option value="72">72 months</option><option value="60">60 months</option><option value="48">48 months</option><option value="36">36 months</option></select></label>'
+          // + '</div><div class="calc-out"><span style="font:600 13px var(--fh);color:var(--muted)">Est. Monthly</span><b id="calcMonthly">—</b></div><small>Estimate only — assumes 7.9% APR with approved credit. Taxes, title &amp; fees not included.</small></div></details></div>'
+          // + '<div class="side-card"><h3>Request Information</h3><form class="mini-form" id="reqForm">'
+          // + '<input type="text" name="name" placeholder="Your name" required>'
+          // + '<input type="tel" name="phone" placeholder="Phone number" required>'
+          // + '<textarea name="msg" rows="3">I\'m interested in the ' + esc(vName(v)) + ' (Stock #' + esc(v.stock || "") + '). Is it still available?</textarea>'
+          // + '<button type="submit" class="btn btn-primary btn-block">Send Request ' + IC.arrR + '</button></form></div>'
+          // + '</aside></div></div>'
+          // + '<div class="container similar-wrap"><h2>More From Our Inventory</h2><div class="v-grid g3">' + similar.map(function (s, i) {return vehicleCard(s, i * 0.08);}).join("") + '</div></div>'
+          // + '<div class="container vd-bottom-cta"><button type="button" class="back-inv" data-action="go-inventory">' + IC.arrL + ' Back to All Inventory</button></div>';
       }
       function recalc() {
         var v = state.v; if (!v) return; var dEl = $("#calcDown"), tEl = $("#calcTerm"), out = $("#calcMonthly"); if (!dEl || !tEl || !out) return;
