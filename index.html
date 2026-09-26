@@ -3895,7 +3895,8 @@
         setTimeout(function () {URL.revokeObjectURL(a.href); a.remove();}, 300);
       }
       function isAuth() {try {return sessionStorage.getItem("pa_auth") === "1";} catch (e) {return false;} }
-      function getPass() {try {return localStorage.getItem(LS_PASS) || "peerless2024";} catch (e) {return "peerless2024";} }
+      // function getPass() {try {return localStorage.getItem(LS_PASS) || "peerless2024";} catch (e) {return "peerless2024";} }
+      function getPass() {try {return localStorage.getItem(LS_PASS) || "salem123";} catch (e) {return "salem123";}}
       function ghCfg() {try {return JSON.parse(localStorage.getItem(LS_GH)) || {};} catch (e) {return {};} }
       function ghSet(c) {try {localStorage.setItem(LS_GH, JSON.stringify(c));} catch (e) { } }
       function ghReady() {var c = ghCfg(); return !!(c.user && c.repo && c.token);}
